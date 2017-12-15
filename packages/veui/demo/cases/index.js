@@ -30,8 +30,14 @@ import Progress from './Progress'
 import Carousel from './Carousel'
 import Transfer from './Transfer'
 import Schedule from './Schedule'
+import Slider from './Slider'
 
 export default [
+  { // 暂且第一，测试方便
+    path: '/slider',
+    name: 'Slider',
+    component: Slider
+  },
   {
     path: '/alert',
     name: 'Alert',
