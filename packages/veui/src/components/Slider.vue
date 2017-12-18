@@ -24,10 +24,14 @@
 <script>
 import { drag } from '../directives'
 import Overlay from './Overlay'
+import { input, ui } from '../mixins'
+// ui 参考progress
+// input 参考 switch
 
 export default {
   name: 'veui-slider',
   directives: { drag },
+  mixins: [input, ui],
   components: {
     'veui-overlay': Overlay
   },
@@ -46,26 +50,24 @@ export default {
       type: Number,
       default: 100
     },
-    snapInterval: {
+    step: {
       type: Number,
       default: 1
-    },
-    tipShow: { // 评论一下，是否可以默认为true
-      type: Boolean,
-      default: true
-    },
-    tipFormat: {
-      type: Function,
-      default: (value) => {
-        return value
-      }
-    },
-    tipPrecision: {
-      type: Number,
-      default: 0
-    },
-    liveDragging: Boolean
+    }
   },
+  // 评论补充
+  // Boolean默认false
+  // scoped slot tip实现
+  // Slider 应该实现输入组件的 mixin。
+  // DOM 上的状态需要感知 realDisabled / realReadonly 两个 computed 值。
+  // update:value → input
+
+  // 支持 v-model
+  // 浮层显示的内容可以完全由 scoped slot 来指定，是显示值还是百分比都可以外部指定。Scoped slot 里可以预先计算一些值方便调用。
+  //
+  // 对于需要和外部保持同步的 prop，应当实现 .sync 修饰符必须的 $emit('update:prop', value) 逻辑
+  // prop 的本地副本，命名需带 local 前缀，例如 value → localValue，须要 watch 对应 prop 变化并同步本地值
+  // prop 或 data 中数据项的计算后版本（具有很接近的语义时），需有 real 前缀，例如 keys → realKeys
   data () {
     return {
       localValue: this.value,
